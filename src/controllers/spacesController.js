@@ -7,11 +7,11 @@ const index = async (req, res) => {
 
     const [result] = await conn.query(
         "SELECT * FROM spaces WHERE userId = ?",
-        [user.userId]
+        [user.id]
     );
 
     return res.json({
-        contactos: result,
+        data: result,
     });
 }
 
