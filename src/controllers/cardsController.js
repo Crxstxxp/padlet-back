@@ -31,7 +31,7 @@ const store = async (req, res) => {
     await file.mv(filePath)
 
     const [result] = await conn.query('INSERT INTO cards (title, description, file, spaceId) VALUES (?, ?, ?, ?)', [title, description, filePath, spaceId]);
-    const [newSpace] = await conn.query('SELECT * FROM spaces WHERE id = ?', [result.insertId]);
+    const [newSpace] = await conn.query('SELECT * FROM cards WHERE id = ?', [result.insertId]);
 
     res.json({
         data: newSpace[0]
