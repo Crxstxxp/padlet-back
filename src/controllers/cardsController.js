@@ -38,8 +38,41 @@ const store = async (req, res) => {
     })
 }
 
+const card = async (req, res) => {
+    const cardId = req.params.id
+    const conn = await connect();
+console.log(`Card ${cardId}`)
+    const [result] = await conn.query(
+        "SELECT * FROM cards WHERE id = ?",
+        [cardId]
+    );
+
+    return res.json({
+        data: result,
+    });
+
+}
+
+const cardFile = async (req, res) => {
+    const cardId = req.params.id
+    const conn = await connect();
+
+    const [result] = await conn.query(
+        "SELECT file FROM cards WHERE id = ?",
+        [cardId]
+    );
+
+    return res.json({
+        data: result,
+    });
+
+}
+
+
 
 module.exports = {
     index,
-    store
+    store,
+    card,
+    cardFile,
 }

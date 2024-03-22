@@ -34,6 +34,10 @@ router.post("/spaces/:id/cards", usersCtrl.verifyJWT, cardsCtrl.store);
  *      file: archivo
  * }
  */
+router.get("/card/:id", usersCtrl.verifyJWT, cardsCtrl.card);
+router.get("/card/:id/file", usersCtrl.verifyJWT, cardsCtrl.cardFile);
+
+
 //Obtener las cartas de un espacio de trabajo spaceId
 router.get("/spaces/:id/cards", usersCtrl.verifyJWT, cardsCtrl.index);
 
