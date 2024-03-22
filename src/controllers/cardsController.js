@@ -54,7 +54,7 @@ console.log(`Card ${cardId}`)
 }
 
 const cardFile = async (req, res) => {
-    const cardId = req.params.id
+    const cardId = req.params.id;
     const conn = await connect();
 
     const [result] = await conn.query(
@@ -62,11 +62,14 @@ const cardFile = async (req, res) => {
         [cardId]
     );
 
-    return res.json({
-        data: result,
-    });
-
-}
+    if (result.length > 0) {
+        const relativeFilePath = result[0].file;
+        const absoluteFilePath = path.resolve(__dirname, '../uploads/', relativeFilePath);
+        res.sendFile(absoluteFilePath);
+    } else {
+        res.status(404).json({ message: 'File not found' });
+    }
+};
 
 
 
