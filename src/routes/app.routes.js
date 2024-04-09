@@ -41,6 +41,9 @@ router.get("/card/:id/file", cardsCtrl.cardFile);
 //Obtener las cartas de un espacio de trabajo spaceId
 router.get("/spaces/:id/cards", usersCtrl.verifyJWT, cardsCtrl.index);
 
+//Ruta para eliminar cards
+router.delete("/spaces/:spaceId/cards/:cardId", usersCtrl.verifyJWT, cardsCtrl.destroy);
+
 /**
  * ex: /spaces/1/cards
  */

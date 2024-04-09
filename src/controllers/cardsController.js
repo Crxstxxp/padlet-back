@@ -71,6 +71,22 @@ const cardFile = async (req, res) => {
     }
 };
 
+const destroy = async (req, res) => {
+    const spaceId = req.params.spaceId;
+    const cardId = req.params.cardId;
+    const conn = await connect();
+
+    const [card] = await conn.query("SELECT * FROM cards WHERE id = ? AND spaceId = ?", [cardId, spaceId]);
+
+    if (card.length === 0) {
+        return res.status(404).json({ message: 'Card not found or does not belong to the specified space' });
+    }
+
+    await conn.query("DELETE FROM cards WHERE id = ?", [cardId]);
+
+    res.status(200).json({ message: 'Card deleted successfully' });
+};
+
 
 
 module.exports = {
@@ -78,4 +94,5 @@ module.exports = {
     store,
     card,
     cardFile,
+    destroy
 }
